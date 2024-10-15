@@ -1,0 +1,4 @@
+python=3.11.4
+numpy=1.21.5
+matplotlib=3.5.1
+django=4.0.3
