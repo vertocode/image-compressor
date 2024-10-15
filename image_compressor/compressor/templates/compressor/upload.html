@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Image compression</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>Image compression</h1>
+            <form id="uploadForm" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="inputContainer">
+                    <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        accept="image/*"
+                        required
+                    />
+                </div>
+
+                <div id="preview" class="image-preview" style="display: none">
+                    <h2>Selected image:</h2>
+                    <img id="selectedImage" alt="Selected image" />
+                    <p id="imageSize"></p>
+                </div>
+                <button class="submitButton" type="submit">Send image</button>
+            </form>
+            <div id="loader" class="loader" style="display: none"></div>
+            <p id="uploadStatus"></p>
+        </div>
+
+        <script>
+            const form = document.getElementById("uploadForm");
+            const loader = document.getElementById("loader");
+            const uploadStatus = document.getElementById("uploadStatus");
+            const imageInput = document.getElementById("image");
+            const preview = document.getElementById("preview");
+            const selectedImage = document.getElementById("selectedImage");
+            const imageSize = document.getElementById("imageSize");
+
+            function formatFileSize(sizeBytes) {
+                if (sizeBytes === 0) return "0 Bytes";
+                const sizeName = ["Bytes", "KB", "MB", "GB", "TB"];
+                const i = Math.floor(Math.log(sizeBytes) / Math.log(1024));
+                const p = Math.pow(1024, i);
+                const s = (sizeBytes / p).toFixed(2);
+                return `${s} ${sizeName[i]}`;
+            }
+
+            imageInput.onchange = function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        selectedImage.src = e.target.result;
+                        preview.style.display = "block";
+                        imageSize.textContent = `Size: ${formatFileSize(file.size)}`;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+
+            form.onsubmit = function () {
+                loader.style.display = "block";
+                uploadStatus.textContent =
+                    "Hold on... We're compressing the image. This can spend some time according to the image size.";
+            };
+        </script>
+    </body>
+</html>

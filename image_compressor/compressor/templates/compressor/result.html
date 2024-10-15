@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Resultado da Compressão</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>Resultado da Compressão</h1>
+            <div class="result-container">
+                <div class="image-container">
+                    <h2>Original Image</h2>
+                    <img src="{{ original_image_url }}" alt="Original Image" />
+                    <p>Size: {{ original_image_size }}</p>
+                </div>
+                <div class="image-container">
+                    <h2>Compressed Image</h2>
+                    <img
+                        src="{{ compressed_image_url }}"
+                        alt="Compressed Image"
+                    />
+                    <p>Size: {{ compressed_image_size }}</p>
+                    <a href="{{ compressed_image_url }}" download>
+                        <button class="download-button">
+                            Download Compressed Image
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <a href="{% url 'upload_image' %}">Voltar</a>
+        </div>
+    </body>
+</html>
