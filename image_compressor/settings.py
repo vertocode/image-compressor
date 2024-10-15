@@ -28,7 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    '.vercel.app'
+    '.vercel.app',
+    'image-compressor-bay.vercel.app'
 ]
 
 MEDIA_URL = '/media/'
