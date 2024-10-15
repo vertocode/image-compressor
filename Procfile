@@ -1,1 +1,1 @@
- web: gunicorn image_compressor
+ web: gunicorn image_compressor.wsgi
